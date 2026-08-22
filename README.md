@@ -66,8 +66,8 @@
 
 ### 6. 타임라인 연산 및 렌더링 파이프라인 최적화 (Optimization & Architecture)
 - **Dirty Flag 패턴 기반 턴 예측(Timeline) 연산 최적화:** 모든 캐릭터의 속도와 현재 행동 게이지를 바탕으로 미래의 턴 대기열(N바퀴)을 예측·정렬하는 무거운 연산 병목을 최적화했습니다. 턴 강제 할당(새치기)이나 광역 도트 데미지로 게이지가 1프레임 내에 연쇄적으로 변하더라도 즉시 계산하지 않고 `isTimelineDirty` 플래그만 활성화하여, `LateUpdate`에서 단 1회만 정렬 연산을 수행하도록 압축해 프레임 드랍을 차단했습니다.
-- **코루틴 분산 처리(Chunk Loading) 로딩 스파이크 제거:** `RoomManager`를 통해 방(Room) 전환 시 수십 개의 오브젝트가 한 번에 `SetActive(true)` 되며 발생될 수 있는 CPU 과부하(Stuttering)를 생각하여 `yield return null`을 활용해 활성화 처리를 다수의 프레임으로 분할 할당하여 화면 멈춤(Spike) 없이 부드러운 맵 탐험 구현.
+- **유니티 코루틴과 물리 엔진의 충돌(로딩 스파이크) 트러블슈팅:** Room 전환 시 발생하는 렉을 줄이고자 오브젝트 활성화를 프레임 단위로 쪼개는 비동기 분산 처리(Chunking)를 시도했으나, 바닥 타일이 활성화되기 전 몬스터가 추락하거나 스크립트의 `OnEnable`이 계층 구조를 건드려 코루틴이 강제 종료되는 엔진의 크리티컬한 한계를 직면했습니다. 이를 통해 엔진의 물리 생명주기를 이해하고, 활성화(`SetActive(true)`)는 물리 버그 방지를 위해 즉시(Instant) 처리하되, 이전 방의 비활성화만 `DelayedDeactivateRooms` 코루틴으로 지연시키는 하이브리드 아키텍처로 선회하여 스파이크와 물리 버그를 해결했습니다.
 - **물리 틱 동기화 및 시네머신 워프(Warp) 제어:** 
   - 무빙 플랫폼 탑승 시 발생하는 캐릭터 Jittering(떨림) 현상을 물리 틱(`FixedUpdate`)과 렌더링 틱(`Update`)을 일치시키고 `Rigidbody2D.MovePosition`을 활용해 제거.
   - 씬 이동이나 텔레포트 시 시네머신 카메라가 먼 거리를 무리하게 추적하려는 비주얼 버그를 `vcam.OnTargetObjectWarped` 함수 호출로 즉시 스냅(Snap)시켜 공간 제어 달성.
-- **📁 관련 코드:** [`TurnCalculator.cs`](https://github.com/124coding/Project-Override_Code_Only/blob/main/Scripts/Data/CharacterData.cs) / [`FieldMonster.cs`](https://github.com/124coding/Project-Override_Code_Only/blob/main/Scripts/Field/Enemy/FieldMonster.cs)
+- **📁 관련 코드:** [`TurnCalculator.cs`](https://github.com/124coding/Project-Override_Code_Only/blob/main/Scripts/Battle/TurnCalculator.cs) / [`RoomManager.cs`](https://github.com/124coding/Project-Override_Code_Only/blob/main/Scripts/Room/RoomManager.cs) / [`TeleportManager.cs`](https://github.com/124coding/Project-Override_Code_Only/blob/main/Scripts/Field/TeleportManager.cs)
