@@ -39,7 +39,7 @@
 - **문제 상황:** 다단 히트 스킬 연출 도중 타겟의 체력이 변하거나 사망하면 타겟팅 조건이 실시간으로 변동되어 엉뚱한 대상을 타격하거나 데미지가 증식하는 치명적인 상태 동기화 문제 발생.
 - **해결 방안 (`Target Snapshot & Filtering` 패턴):** 
   - 수치 연산 전담(`BattleLogicHandler`)과 시각적 연출 전담(`CharacterAction`)으로 **관심사를 완전 분리**.
-  - 스킬 시전 시점의 타겟 명세서를 **스냅샷(Snapshot)**으로 캡처하고, 실제 연출 적중 시점에 교집합을 필터링하여 데미지를 적용.
+  - 스킬 시전 시점의 타겟 명세서를 스냅샷(Snapshot)으로 캡처하고, 실제 연출 적중 시점에 교집합을 필터링하여 데미지를 적용.
   - 대상에게 걸린 '저주(Curse)' 상태이상 판별 시 힐이 데미지로 변환되는 기믹 등 턴제 특유의 엣지 케이스를 안전하게 분기 처리.
 - **📁 관련 코드:** [`BattleLogicHandler.cs`](https://github.com/124coding/Project-Override_Code_Only/blob/main/Scripts/Battle/BattleLogicHandler.cs) / [`CharacterAction.cs`](https://github.com/124coding/Project-Override_Code_Only/blob/main/Scripts/Character/CharacterAction.cs)
 
