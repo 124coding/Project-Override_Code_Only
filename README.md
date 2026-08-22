@@ -15,9 +15,9 @@
 <br>
 
 ## 게임 시연 (Play Video)
-![Game_Play_GIF](https://github.com/user-attachments/assets/8d17c66b-31a1-4d9a-9813-d8e5e8425c98)
+![Game_Play_GIF](https://github.com/user-attachments/assets/24104594-c078-40cf-a2d5-3e416cfab08c)
 
-**[실행 가능한 빌드 다운로드](https://drive.google.com/file/d/1UkoMRD0vAzhW9uAXNvmQK8LmnKUh0pWt/view?usp=sharing)** (개발 중 빌드로 일부 버그가 존재할 수 있습니다.)
+**[실행 가능한 빌드 다운로드](https://drive.google.com/file/d/19fVRdilDRetZowMmNxJd2gndj8wpSOgp/view)** (개발 중 빌드로 일부 버그가 존재할 수 있습니다.)
 
 <br>
 
