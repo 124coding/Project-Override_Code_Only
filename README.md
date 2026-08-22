@@ -38,7 +38,7 @@
 ### 1. 전투 로직/연출 분리 및 엣지 케이스(Edge Case) 방어
 - **문제 상황:** 다단 히트 스킬 연출 도중 타겟의 체력이 변하거나 사망하면 타겟팅 조건이 실시간으로 변동되어 엉뚱한 대상을 타격하거나 데미지가 증식하는 치명적인 상태 동기화 문제 발생.
 - **해결 방안 (`Target Snapshot & Filtering` 패턴):** 
-  - 수치 연산 전담(`BattleLogicHandler`)과 시각적 연출 전담(`CharacterAction`)으로 **관심사를 완전 분리**.
+  - 수치 연산 전담(`BattleLogicHandler`)과 시각적 연출 전담(`CharacterAction`)으로 관심사를 분리.
   - 스킬 시전 시점의 타겟 명세서를 스냅샷(Snapshot)으로 캡처하고, 실제 연출 적중 시점에 교집합을 필터링하여 데미지를 적용.
   - 대상에게 걸린 '저주(Curse)' 상태이상 판별 시 힐이 데미지로 변환되는 기믹 등 턴제 특유의 엣지 케이스를 안전하게 분기 처리.
 - **📁 관련 코드:** [`BattleLogicHandler.cs`](https://github.com/124coding/Project-Override_Code_Only/blob/main/Scripts/Battle/BattleLogicHandler.cs) / [`CharacterAction.cs`](https://github.com/124coding/Project-Override_Code_Only/blob/main/Scripts/Character/CharacterAction.cs)
@@ -46,7 +46,7 @@
 ### 2. 데이터 주도 설계(Data-Driven)와 가중치 기반 유틸리티 AI
 - **동적 스킬 파이프라인:** 단타, 연타 등 복잡한 스킬 메커니즘을 `SkillData` 및 `EffectPayload` (ScriptableObject) 내부에 정의하여 모듈화. 프로그래머 개입 없이 스킬 조합 가능.
 - **핑퐁 패턴(Ping-Pong Pattern) 극복:** 마나가 특정 수치일 때 스킬과 방어를 기계적으로 반복하는 단순 AI 패턴의 단조로움을 극복.
-- **가중치 기반 연산:** 타겟의 현재 체력, 획득한 방어 버프, 도발 상태 등을 실시간으로 종합 평가하여 **행동 점수(Score)**를 산출하는 가중치 기반 AI 아키텍처 구축.
+- **가중치 기반 연산:** 타겟의 현재 체력, 획득한 방어 버프, 도발 상태 등을 실시간으로 종합 평가하여 행동 점수(Score)를 산출하는 가중치 기반 AI 아키텍처 구축.
 - **📁 관련 코드:** [`EffectSystem.cs`](https://github.com/124coding/Project-Override_Code_Only/blob/main/Scripts/Character/EffectSystem.cs) / [`EnemyAI.cs`](https://github.com/124coding/Project-Override_Code_Only/blob/main/Scripts/Character/Enemy/EnemyAI.cs)
 
 ### 3. 전역 데이터 파이프라인 및 이벤트 주도(Event-Driven) 시스템
