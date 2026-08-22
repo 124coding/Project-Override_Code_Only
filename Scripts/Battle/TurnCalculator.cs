@@ -73,7 +73,6 @@ public class TurnCalculator : MonoBehaviour
 
     private void ApplyEncounterAdvantage()
     {
-        // TODO: 기획에 맞게 수정
         foreach (var entity in allCombatants)
         {
             switch (DataManager.Instance.currentEncounterType)
@@ -116,8 +115,6 @@ public class TurnCalculator : MonoBehaviour
             int predictCount = 10;
             for (int i = 0; i < predictCount; i++)
             {
-                // i = 0: 이번 턴, i = 1: 다음 턴, i = 2: 다다음 턴...
-                // 목표치 = (결승선 - 현재 위치) + (바퀴 수 * 결승선)
                 float requiredGauge = (TARGET_GAUGE - c.CurrentActionGauge) + (i * TARGET_GAUGE);
                 float timeToReach = requiredGauge / (float)c.Speed;
 
@@ -128,8 +125,6 @@ public class TurnCalculator : MonoBehaviour
         // 계산된 모든 미래의 턴들을 '남은 시간' 기준으로 오름차순 정렬!
         predictions = predictions.OrderBy(p => p.TimeToTurn).ToList();
 
-        // 정렬된 예측 결과에서 캐릭터 알맹이만 빼내어 UI 개수만큼만 자릅니다.
-        // 이때 빠른 캐릭터는 리스트 안에 2~3번 중복해서 들어갈 수 있습니다!
         turnQueue = predictions.Select(p => p.Character).Take(maxTimelineSlots).ToList();
 
         // 새치기(궁극기 등) 처리
@@ -140,7 +135,6 @@ public class TurnCalculator : MonoBehaviour
             turnQueue.Insert(0, forcedNextEntity);
         }
 
-        // [B와의 협업] "턴 대기열 10칸이 갱신되었어!" 라고 방송
         BattleEvents.OnTurnOrderUpdated?.Invoke(turnQueue);
     }
 
@@ -196,11 +190,8 @@ public class TurnCalculator : MonoBehaviour
     // 특정 팀 점멸했는지 확인
     public bool IsTeamWipedOut(bool isPlayerTeam)
     {
-        // 명단(allCombatants)을 뒤져서,
-        // 해당 팀(isPlayerTeam) 소속이면서 속도가 0보다 큰(살아있는) 사람이 있는지 검사합니다.
         bool hasAliveMember = allCombatants.Any(e => e.IsPlayer == isPlayerTeam && e.CurrentHP > 0);
 
-        // 살아있는 사람이 한 명도 없다면(!hasAliveMember) 전멸(true)입니다!
         return !hasAliveMember;
     }
 }
