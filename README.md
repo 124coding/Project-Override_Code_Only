@@ -17,14 +17,14 @@
 ## 게임 시연 (Play Video)
 ![Game_Play_GIF](https://github.com/user-attachments/assets/24104594-c078-40cf-a2d5-3e416cfab08c)
 
-**[실행 가능한 빌드 다운로드](https://drive.google.com/file/d/1gRkMCGDLH6r_DZRtQ8aIxPEPL8lYjfdm/view?usp=sharing)** (개발 중 빌드로 일부 버그가 존재할 수 있습니다.)
+**[실행 가능한 빌드 다운로드](https://drive.google.com/file/d/1gRkMCGDLH6r_DZRtQ8aIxPEPL8lYjfdm/view?usp=sharing)**
 
 <br>
 
 ## 📋 프로젝트 개요 (Overview)
 | 항목 | 내용 |
 | --- | --- |
-| **개발 기간** | 2026.05 ~ 현재 (진행 중) |
+| **개발 기간** | 2026.05 ~ 2026.09 |
 | **장르** | 2D 플랫포머 탐험 + 깊이 있는 속성/상태이상 연계 턴제 RPG |
 | **팀 구성** | 5명 (클라이언트 프로그래머 2명, 기획자 2명, 원화 1명) |
 | **담당 역할** | **Main Client Programmer**<br>- 전투 엔진 및 로직 아키텍처 설계<br>- 가중치 기반 유틸리티 AI 구현<br>- DataManager 전역 데이터 파이프라인 구축<br>- 물리 연산(조작감) 및 객체 지향 상호작용 구현 |
